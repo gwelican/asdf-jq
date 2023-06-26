@@ -51,8 +51,6 @@ download_release() {
 
 	url="$GH_REPO/releases/download/${version}/jq-${platform}"
 
-	# https://github.com/jqlang/jq/releases/download/jq-1.6/jq-osx-amd64
-	# https://github.com/jqlang/jq/releases/download/jq-1.6/jq-osx-amd64
 	echo "* Downloading $TOOL_NAME release $version... to $filename"
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
 }
