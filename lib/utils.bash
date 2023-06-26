@@ -42,8 +42,17 @@ download_release() {
 	filename="$2"
 
 	# TODO: Adapt the release URL convention for jq
-	url="$GH_REPO/archive/v${version}.tar.gz"
+	local platform
+	case "$OSTYPE" in
+		darwin*) platform="osx-amd64" ;;
+		linux*) platform="linux64" ;;
+		*) fail "Unsupported platform" ;;
+	esac
 
+	url="$GH_REPO/releases/download/jq-${version}/jq-${platform}"
+
+	# https://github.com/jqlang/jq/releases/download/jq-1.6/jq-osx-amd64
+	# https://github.com/jqlang/jq/releases/download/jq-1.6/jq-osx-amd64
 	echo "* Downloading $TOOL_NAME release $version..."
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
 }
