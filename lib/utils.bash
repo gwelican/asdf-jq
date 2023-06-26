@@ -51,7 +51,7 @@ download_release() {
 		*) fail "Unsupported platform" ;;
 	esac
 
-	url="$GH_REPO/releases/download/${version}/jq-${platform}"
+	url="$GH_REPO/releases/download/jq-${version}/jq-${platform}"
 
 	echo "* Downloading $TOOL_NAME release $version... to $filename"
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
