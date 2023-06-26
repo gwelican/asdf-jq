@@ -49,11 +49,11 @@ download_release() {
 		*) fail "Unsupported platform" ;;
 	esac
 
-	url="$GH_REPO/releases/download/jq-${version}/jq-${platform}"
+	url="$GH_REPO/releases/download/${version}/jq-${platform}"
 
 	# https://github.com/jqlang/jq/releases/download/jq-1.6/jq-osx-amd64
 	# https://github.com/jqlang/jq/releases/download/jq-1.6/jq-osx-amd64
-	echo "* Downloading $TOOL_NAME release $version..."
+	echo "* Downloading $TOOL_NAME release $version... to $filename"
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
 }
 
@@ -68,11 +68,13 @@ install_version() {
 
 	(
 		mkdir -p "$install_path"
+		find $ASDF_DOWNLOAD_PATH
 		cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path"
 
 		# TODO: Assert jq executable exists.
 		local tool_cmd
 		tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"
+	        chmod +x "$install_path/$tool_cmd"
 		test -x "$install_path/$tool_cmd" || fail "Expected $install_path/$tool_cmd to be executable."
 
 		echo "$TOOL_NAME $version installation was successful!"
